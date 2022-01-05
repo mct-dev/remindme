@@ -1,15 +1,22 @@
 {
+  "extends": "../tsconfig.json",
+  "references": [
+    {
+      "path": "../common"
+    }
+  ],
   "compilerOptions": {
+    "outDir": "lib",
     "module": "commonjs",
+    "moduleResolution": "node",
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-    "outDir": "lib",
     "sourceMap": true,
     "strict": true,
     "target": "es2017"
   },
-  "compileOnSave": true,
   "include": [
-    "src"
-  ]
+    "**/*.ts"
+  ],
+  "exclude": ["node_modules"]
 }

@@ -1,4 +1,10 @@
 {
+  "extends": "../tsconfig.json",
+  "references": [
+    {
+      "path": "../common"
+    }
+  ],
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],

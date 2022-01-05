@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "workspaces": ["functions", "common", "web-client"],
+  "name": "remindme",
+  "version": "1.0.0"
+}
