@@ -1,5 +1,11 @@
 .formContainer {
-  padding: 2rem;
+  padding: 10vh 25vw;
+}
+
+@media screen and (max-width: 575px) {
+  .formContainer {
+    padding: 0;
+  }
 }
 
 .footer {
