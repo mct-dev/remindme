@@ -2,9 +2,10 @@ import { FC, useState } from "react";
 import { Form, Input, Button, DatePicker, Select, Divider } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import moment from "moment";
-import { upsertReminder } from "../../access/reminders";
+import { useUpsertReminderMutation } from "../../access/reminders";
 import { Reminder } from "../../access/models/Reminder";
 import { Timestamp } from "firebase/firestore";
+import toast from "react-hot-toast";
 
 enum Recurrence {
   OneTime = "One Time",
@@ -25,28 +26,39 @@ export const LinkForm: FC = () => {
   const [newCategoryName, setNewCategoryName] = useState("");
   const [categories, setCategories] = useState<string[]>([]);
 
+  const { mutate, isLoading } = useUpsertReminderMutation()
+
   const addNewCategory = () => {
     setCategories([...categories, newCategoryName]);
   };
   const submit = async (values: FormData) => {
-    console.log(values);
+    const id = Buffer.from(values.link, 'binary').toString('base64')
+
     const data: Reminder = {
       email: values.email,
       link: {
-        value: encodeURIComponent(values.link),
+        id,
+        value: values.link,
         category: values.category,
         remindDatetime: Timestamp.fromDate(values.remindDate.toDate()),
         recurrence: values.recurrence,
       },
     };
 
-    await upsertReminder(data);
+    mutate(data, {
+      onSuccess: () => {
+        toast.success('Reminder created!')
+      },
+      onError: () => {
+        toast.error('Oops! Something went wrong.')
+      }
+    })
   };
 
   return (
     <Form
       name="basic"
-      initialValues={{ remember: true }}
+      initialValues={{ remember: true, recurrence: Recurrence.OneTime }}
       onFinish={submit}
       onFinishFailed={() => null}
       autoComplete="on"
@@ -108,7 +120,7 @@ export const LinkForm: FC = () => {
             </div>
           )}
         >
-          {categories.map((item, ix) => (
+          {categories.map((item) => (
             <Select.Option key={item}>{item}</Select.Option>
           ))}
         </Select>
@@ -133,7 +145,7 @@ export const LinkForm: FC = () => {
         rules={[{ required: true, message: "Please choose." }]}
         wrapperCol={{ span: 11 }}
       >
-        <Select defaultValue={Recurrence.OneTime} size="large">
+        <Select size="large">
           <Select.Option value={Recurrence.OneTime}>
             {Recurrence.OneTime}
           </Select.Option>
@@ -149,7 +161,7 @@ export const LinkForm: FC = () => {
         </Select>
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={isLoading}>
           Submit
         </Button>
       </Form.Item>
