@@ -1,6 +1,0 @@
-# Compiled JavaScript files
-lib/**/*.js
-lib/**/*.js.map
-
-# typscript build info file
-*.tsbuildinfo
