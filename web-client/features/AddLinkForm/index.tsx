@@ -31,6 +31,7 @@ export const LinkForm: FC = () => {
   const addNewCategory = () => {
     setCategories([...categories, newCategoryName]);
   };
+
   const submit = async (values: FormData) => {
     const id = Buffer.from(values.link, 'binary').toString('base64')
 
