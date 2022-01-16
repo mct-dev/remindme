@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "1Lmg5XnrWVa26KXReUp/PV+22PCsVGua4CVoAif3WjThhMmVG9Lo98FDj/rb1DPfMAXpQ3QD2Nfor99WNj7IdA==",
+  "success": false,
+  "projectFilePath": "/Users/mike/git/github/mct-dev/remindme/Api/Api.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1100",
+      "level": "Error",
+      "message": "Unable to resolve 'Swashbuckle.AspNetCore (>= 6.2.3)' for 'net6.0'.",
+      "libraryId": "Swashbuckle.AspNetCore",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
+}
